@@ -14,7 +14,10 @@ const {loadCardTemplate/*, setSiraImpiantoModel*/} = require('../../actions/card
 
 const AuthorizedObject = React.createClass({
     propTypes: {
-        list: React.PropTypes.array,
+        list: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.array
+        ]),
         listTitle: React.PropTypes.string,
         detailsTemplateConfigURL: React.PropTypes.string,
         actions: React.PropTypes.shape({
@@ -37,10 +40,12 @@ const AuthorizedObject = React.createClass({
                 <h4>{this.props.listTitle}</h4>
                 <ul className={"list-style-type:circle"}>
                     {
-                        this.props.list.map((codicesira) => (
+                        this.props.list instanceof Array ? this.props.list.map((codicesira) => (
                             // <li key={"factoryelement_" + element.codicesira}><a style={{cursor: "pointer"}} onClick={() => this.drillDown(element)}>Impianto codice sira {element.codicesira}</a></li>
                             <li key={"factoryelement_" + codicesira}><a style={{cursor: "pointer"}} onClick={() => this.drillDown()}>Impianto codice sira {codicesira}</a></li>
-                        ))
+                        )) : (
+                            <li key={"factoryelement_" + this.props.list}><a style={{cursor: "pointer"}} onClick={() => this.drillDown()}>Impianto codice sira {this.props.list}</a></li>
+                        )
                     }
                 </ul>
             </div>

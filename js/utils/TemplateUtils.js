@@ -101,7 +101,7 @@ const TemplateUtils = {
             results.forEach((res) => {
                 values.push(this.getElementValue(res));
             });
-            value = values;
+            value = values.length > 1 ? values : values[0];
         }
 
         if (element.type === this.OBJECT_TYPE) {
@@ -216,7 +216,7 @@ const TemplateUtils = {
             results.forEach((res) => {
                 values.push(this.getElementValue(res));
             });
-            value = values;
+            value = values.length > 1 ? values : values[0];
         }
 
         return value;

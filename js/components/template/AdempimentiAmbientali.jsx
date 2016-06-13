@@ -15,7 +15,7 @@ const {loadCardTemplate} = require('../../actions/card');
 const AdempimentiAmbientali = React.createClass({
     propTypes: {
         profile: React.PropTypes.string,
-        codiceSira: React.PropTypes.number,
+        codiceSira: React.PropTypes.string,
         listTitle: React.PropTypes.string,
         numAuth: React.PropTypes.string,
         dataAuth: React.PropTypes.string,

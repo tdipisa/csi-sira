@@ -20,8 +20,10 @@ require("ag-grid/dist/styles/theme-blue.css");
 const SiraTable = React.createClass({
     propTypes: {
         id: React.PropTypes.string,
+        card: React.PropTypes.object,
         style: React.PropTypes.object,
         columnDefs: React.PropTypes.array,
+        dependsOn: React.PropTypes.object,
         features: React.PropTypes.oneOfType([
             React.PropTypes.array,
             React.PropTypes.func
@@ -33,6 +35,8 @@ const SiraTable = React.createClass({
             id: "SiraTable",
             style: {height: "200px", width: "100%"},
             features: [],
+            card: null,
+            dependsOn: null,
             columnDefs: [],
             selectRows: () => {}
         };
@@ -45,10 +49,18 @@ const SiraTable = React.createClass({
             features = this.props.features.map((feature) => {
                 let f = {};
                 this.props.columnDefs.forEach((column) => {
-                    f[column.field] = TemplateUtils.getElement({xpath: column.xpath}, feature)[0];
+                    if (column.field) {
+                        f[column.field] = TemplateUtils.getElement({xpath: column.xpath}, feature);
+                    }
                 });
                 return f;
             });
+        }
+
+        if (this.props.dependsOn) {
+            features = features.filter(function(feature) {
+                return feature.id === this.props.card[this.props.dependsOn.tableId];
+            }, this);
         }
 
         return (
@@ -65,7 +77,12 @@ const SiraTable = React.createClass({
         this.props.selectRows(this.props.id, (params.selectedRows[0]) ? params.selectedRows[0].id : null);
     }
 });
-module.exports = connect(null, dispatch => {
+
+module.exports = connect((state) => {
+    return {
+        card: state.cardtemplate || {}
+    };
+}, dispatch => {
     return bindActionCreators({
         selectRows: selectRows
     }, dispatch);
