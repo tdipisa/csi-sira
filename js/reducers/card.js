@@ -6,7 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-
 const {
     CARD_TEMPLATE_LOADED, CARD_TEMPLATE_LOAD_ERROR,
     SELECT_SECTION, ACTIVE_SECTION, SELECT_ROWS, SET_IMPIANTO_MODEL
@@ -17,7 +16,7 @@ const assign = require('object-assign');
 const initialState = {
     show: false,
     template: null,
-    model: null,
+    xml: null,
     impiantoModel: null
 };
 
@@ -26,7 +25,7 @@ function cardtemplate(state = initialState, action) {
         case CARD_TEMPLATE_LOADED: {
             return assign({}, state, {
                 template: action.template,
-                model: action.model || state.model,
+                xml: action.xml || state.xml,
                 activeSections: null
             });
         }

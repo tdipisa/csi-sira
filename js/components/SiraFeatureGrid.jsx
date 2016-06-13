@@ -34,7 +34,7 @@ const GoToDetail = require('./GoToDetail');
 
 const {loadCardTemplate} = require('../actions/card');
 const {toggleSiraControl} = require('../actions/controls');
-const {loadFeatureGridConfig} = require('../actions/grid');
+// const {loadFeatureGridConfig} = require('../actions/grid');
 
 const Spinner = require('react-spinkit');
 
@@ -64,7 +64,7 @@ const SiraFeatureGrid = React.createClass({
         onShowDetail: React.PropTypes.func,
         toggleSiraControl: React.PropTypes.func,
         changeMapView: React.PropTypes.func,
-        loadFeatureGridConfig: React.PropTypes.func,
+        // loadFeatureGridConfig: React.PropTypes.func,
         onExpandFilterPanel: React.PropTypes.func
     },
     contextTypes: {
@@ -87,11 +87,11 @@ const SiraFeatureGrid = React.createClass({
             onShowDetail: () => {},
             toggleSiraControl: () => {},
             changeMapView: () => {},
-            loadFeatureGridConfig: () => {},
+            // loadFeatureGridConfig: () => {},
             onExpandFilterPanel: () => {}
         };
     },
-    componentDidMount() {
+    /*componentDidMount() {
         if (this.props.featureGrigConfigUrl && this.props.profile) {
             this.props.loadFeatureGridConfig(this.props.featureGrigConfigUrl + this.props.profile + ".json");
         }
@@ -102,7 +102,7 @@ const SiraFeatureGrid = React.createClass({
         if (url !== this.props.featureGrigConfigUrl && profile !== this.props.profile) {
             this.props.loadFeatureGridConfig(this.props.featureGrigConfigUrl + this.props.profile + ".json");
         }
-    },
+    },*/
     onGridClose() {
         this.props.toggleSiraControl();
         this.props.onExpandFilterPanel(true);
@@ -230,7 +230,7 @@ const SiraFeatureGrid = React.createClass({
     goToDetail(params) {
         this.props.onDetail(
             this.props.detailsConfig.cardTemplateConfigUrl,
-            this.props.detailsConfig.cardModelConfigUrl,
+            // this.props.detailsConfig.cardModelConfigUrl,
             this.props.detailsConfig.wfsUrl + "&FEATUREID=" + params.data.id + "&authkey=" + this.props.authParam.authkey
         );
 
@@ -253,6 +253,6 @@ module.exports = connect((state) => ({
     onShowDetail: toggleSiraControl.bind(null, 'detail'),
     toggleSiraControl: toggleSiraControl.bind(null, 'grid'),
     changeMapView: changeMapView,
-    loadFeatureGridConfig: loadFeatureGridConfig,
+    // loadFeatureGridConfig: loadFeatureGridConfig,
     onExpandFilterPanel: expandFilterPanel
 })(SiraFeatureGrid);

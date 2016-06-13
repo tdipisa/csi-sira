@@ -78,7 +78,7 @@ function loadGridModelWithFilter(wfsUrl, data, params) {
     };
 }
 
-function loadFeatureGridConfig(configUrl) {
+/*function loadFeatureGridConfig(configUrl) {
     return (dispatch) => {
         return axios.get(configUrl).then((response) => {
             let gridConfig = response.data;
@@ -94,7 +94,7 @@ function loadFeatureGridConfig(configUrl) {
             dispatch(configureGridError(e));
         });
     };
-}
+}*/
 
 module.exports = {
     GRID_MODEL_LOADED,
@@ -103,7 +103,7 @@ module.exports = {
     SHOW_LOADING,
     configureGrid,
     configureGridModel,
-    loadFeatureGridConfig,
+    // loadFeatureGridConfig,
     loadGridModel,
     loadGridModelWithFilter,
     configureGridError

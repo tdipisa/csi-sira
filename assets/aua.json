@@ -7,7 +7,14 @@
          "id": "sira:impianto/sira:Sede/sira:provincia",
          "fieldName":"Provincia",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:province&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:province",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "valueId":"sigla",
          "valueLabel":"toponimo"
       },
@@ -16,7 +23,14 @@
          "id": "sira:impianto/sira:Sede/sira:comune",
          "fieldName":"Comune",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:comuni&propertyName=id_comune,sigla_provincia,toponimo&sortBy=toponimo+A&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:comuni",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "valueId":"toponimo",
          "valueLabel":"toponimo",
          "dependson":{
@@ -30,7 +44,14 @@
          "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRecupero/sira:TipoRecupero/@gml:id",
          "fieldName":"Tipo Recupero",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:tipo_recupero&sortBy=id_tipo_recupero+A&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:tipo_recupero",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "fidPrefix": "tipo_recupero",
          "valueId":"id_tipo_recupero",
          "valueLabel":"des_tipo_recupero"
@@ -40,7 +61,14 @@
          "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/@gml:id",
          "fieldName":"Tipo Rifiuto",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:tipo_rifiuto&sortBy=id+A&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:tipo_rifiuto",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "fidPrefix": "tipo_rifiuto",
          "valueId":"id",
          "valueLabel":"label"
@@ -50,7 +78,14 @@
          "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:operazioneRecupero/sira:OperazioneRecupero/@gml:id",
          "fieldName":"Operazione Recupero",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:operaz_recupero&sortBy=id+A&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:operaz_recupero",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "fidPrefix": "operaz_rec",
          "valueId":"id",
          "valueLabel":"label"
@@ -60,7 +95,14 @@
          "id": "sira:attivita/sira:Attivita/@gml:id",
          "fieldName":"Attività",
          "type":"list",
-         "valueService":"{geoserverUrl}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=sira:sipra_d_attivita&sortBy=id_attivita+A&outputFormat=application%2Fjson",
+         "valueService": {
+           "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+           "urlParams": {
+             "typeName": "sira:sipra_d_attivita",
+             "version": "1.1.0",
+             "outputFormat": "application/json"
+           }
+         },
          "fidPrefix": "attivita",
          "valueId":"id_attivita",
          "valueLabel":"des_attivita"

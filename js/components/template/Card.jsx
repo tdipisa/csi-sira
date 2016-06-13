@@ -15,6 +15,8 @@ const {Modal} = require('react-bootstrap');
 const {toggleSiraControl} = require("../../actions/controls");
 const toggleDetail = toggleSiraControl.bind(null, 'detail');
 
+const TemplateUtils = require('../../utils/TemplateUtils');
+
 const Draggable = require('react-draggable');
 require("./card.css");
 
@@ -67,12 +69,19 @@ const Card = React.createClass({
         );
     },
     renderCard() {
+        const xml = this.props.model.xml;
+        const authParam = this.props.model.authParam;
+        const model = {
+            authParam: authParam,
+            getValue: (element) => TemplateUtils.getValue(xml, element)
+        };
+
         return (this.props.card.loadingCardTemplateError) ? (
                 this.renderLoadTemplateException()
             ) : (
             <Draggable start={{x: 732, y: 165}} handle=".panel-heading,.panel-heading *">
                 <div className="scheda-sira">
-                    <TemplateSira template={this.props.card.template} model={this.props.model} impiantoModel={this.props.impiantoModel}/>
+                    <TemplateSira template={this.props.card.template} model={model} impiantoModel={this.props.impiantoModel}/>
                 </div>
             </Draggable>);
     },

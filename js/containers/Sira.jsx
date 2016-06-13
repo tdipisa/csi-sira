@@ -197,7 +197,7 @@ const Sira = React.createClass({
         featureGrigConfigUrl: React.PropTypes.string,
         error: React.PropTypes.object,
         loading: React.PropTypes.bool,
-        cardModel: React.PropTypes.object,
+        cardXml: React.PropTypes.string,
         nsResolver: React.PropTypes.func,
         controls: React.PropTypes.object,
         toggleSiraControl: React.PropTypes.func,
@@ -210,8 +210,8 @@ const Sira = React.createClass({
         this.props.setProfile(this.props.params.profile, authParams[this.props.params.profile]);
     },
     render() {
-        let card = this.props.cardModel ? (
-            <Card model={assign({}, this.props.cardModel, {authParam: authParams[this.props.params.profile]})}/>
+        let card = this.props.cardXml ? (
+            <Card model={{xml: this.props.cardXml, authParam: authParams[this.props.params.profile]}}/>
         ) : (
             <span/>
         );
@@ -328,7 +328,7 @@ module.exports = connect((state) => {
     return {
         loading: !state.config || !state.locale || false,
         error: state.loadingError || (state.locale && state.locale.localeError) || null,
-        cardModel: state.cardtemplate.model,
+        cardXml: state.cardtemplate.xml,
         controls: state.siraControls,
         featureGrigConfigUrl: state.grid.featureGrigConfigUrl
     };

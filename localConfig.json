@@ -1,5 +1,173 @@
 {
 	"proxyUrl": "/sira/proxy/?url=",
 	"geoStoreUrl": "/sira/rest/geostore",
-	"geoserverUrl": "${url.geoserver}/geoserver"
+	"geoserverUrl": "http://sira.csi.geo-solutions.it/geoserver",
+	"queryForm": {
+	  "searchUrl": "{geoserverUrl}/ows?service=WFS",
+	  "featureTypeConfigUrl": "assets/aua.json",
+	  "showGeneratedFilter": false,
+	  "attributePanelExpanded": true,
+	  "spatialPanelExpanded": false,
+	  "showDetailsPanel": false,
+	  "groupLevels": 1,
+	  "useMapProjection": false,
+	  "toolbarEnabled": true,
+	  "groupFields": [
+	      {
+	          "id": 1,
+	          "logic": "AND",
+	          "index": 0
+	      }
+	  ],
+	  "filterFields": [{
+	      "rowId": 1,
+	      "groupId": 1,
+	      "attribute": null,
+	      "operator": "=",
+	      "value": null,
+	      "type": null,
+	      "exception": null
+	  }],
+	  "spatialField": {
+	      "method": null,
+	      "attribute": "geometria",
+	      "operation": "INTERSECTS",
+	      "geometry": null
+	  }
+	},
+	"featureGrid": {
+	  "detailsConfig": {
+	    "cardTemplateConfigUrl": "assets/cardTemplateB.config",
+	    "cardModelConfigUrl": "assets/cardModelConfig.json",
+	    "wfsUrl": "{geoserverUrl}/ows?service=WFS&version=2.0&request=GetFeature&typeName=sira:AutorizzazioneUnicaAmbientale&srsName=EPSG:4326"
+	  },
+	  "modelConfig": {
+	    "root": "/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale",
+	    "geometryType": "Point",
+	    "config": [
+	      {
+	        "field": "id",
+	        "xpath": ["@gml:id"],
+	        "type": 2
+	      },
+	      {
+	        "field": "codice",
+	        "xpath": ["sira:impianto/sira:Sede/sira:codiceSira/text()"],
+	        "type": 1
+	      },
+	      {
+	        "field": "codicefisc",
+	        "xpath": ["sira:istanza/sira:IstanzaAutorizzativa/sira:codiceFiscale/text()"],
+	        "profiles": ["B"],
+	        "type": 2
+	      },
+	      {
+	        "field": "comune",
+	        "xpath": ["sira:impianto/sira:Sede/sira:comune/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "autamb",
+	        "xpath": [
+	            "sira:attivita/sira:Attivita/sira:descrizione/text()"
+	        ],
+	        "type": 2
+	      },
+	      {
+	        "type": 6,
+	        "field": "geometry",
+	        "xpath": ["sira:impianto/sira:Sede/sira:geometria/gml:Point/gml:pos/text()"]
+	      }
+	    ]
+	  }
+	},
+	"topology": {
+	  "modelConfig": {
+	    "root": "/wfs:FeatureCollection/gml:featureMember/ms:ZONES_IPR",
+	    "config": [
+	      {
+	        "field": "id",
+	        "header": "Id",
+	        "width": 100,
+	        "xpath": ["@gml:id"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_code",
+	        "header": "Codice",
+	        "width": 100,
+	        "xpath": ["ms:zone_code/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_name",
+	        "header": "Nome",
+	        "width": 100,
+	        "xpath": ["ms:zone_name/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_start_date",
+	        "header": "Data Inizio",
+	        "width": 100,
+	        "xpath": ["ms:zone_start_date/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_end_date",
+	        "header": "Data Fine",
+	        "width": 100,
+	        "xpath": ["ms:zone_end_date/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_last_update",
+	        "header": "Ultimo Aggiornamento",
+	        "width": 100,
+	        "xpath": ["ms:zone_last_update/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "zone_population",
+	        "header": "Popolazione",
+	        "width": 100,
+	        "xpath": ["ms:zone_population/text()"],
+	        "type": 1
+	      },
+	      {
+	        "field": "zone_population_year",
+	        "header": "Anno",
+	        "width": 100,
+	        "xpath": ["ms:zone_population_year/text()"],
+	        "type": 1
+	      },
+	      {
+	        "field": "zone_area",
+	        "header": "Area",
+	        "width": 100,
+	        "xpath": ["ms:zone_area/text()"],
+	        "type": 1
+	      },
+	      {
+	        "field": "zone_type_label",
+	        "header": "Tipo",
+	        "width": 100,
+	        "xpath": ["ms:zone_type_label/text()"],
+	        "type": 2
+	      },
+	      {
+	        "field": "pollutant_year",
+	        "header": "Anno Inquinamento",
+	        "width": 100,
+	        "xpath": ["ms:pollutant_year/text()"],
+	        "type": 1
+	      },
+	      {
+	        "type": 6,
+	        "field": "geometry",
+	        "xpath": ["ms:msGeometry/gml:MultiSurface/gml:surfaceMembers/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList/text()"]
+	      }
+	    ]
+	  }
+	}
 }

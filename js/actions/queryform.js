@@ -47,8 +47,9 @@ function configureQueryFormError(e) {
 
 function getAttributeValues(ftName, field, params) {
     return (dispatch) => {
-        if (field.valueService) {
-            let {url} = ConfigUtils.setUrlPlaceholders({url: field.valueService});
+        if (field.valueService && field.valueService.url) {
+            let {url} = ConfigUtils.setUrlPlaceholders({url: field.valueService.url});
+
             for (let param in params) {
                 if (params.hasOwnProperty(param)) {
                     url += "&" + param + "=" + params[param];
@@ -95,7 +96,11 @@ function loadFeatureTypeConfig(url, params) {
 
             for (let field in config.fields) {
                 if (field) {
-                    dispatch(getAttributeValues({id: config.featureTypeName, name: config.featureTypeNameLabel}, config.fields[field], params));
+                    let f = config.fields[field];
+
+                    let urlParams = f.valueService && f.valueService.urlParams ? assign({}, params, f.valueService.urlParams) : params;
+
+                    dispatch(getAttributeValues({id: config.featureTypeName, name: config.featureTypeNameLabel}, f, urlParams));
                 }
             }
         }).catch((e) => {
@@ -104,7 +109,7 @@ function loadFeatureTypeConfig(url, params) {
     };
 }
 
-function loadQueryFormConfig(configUrl, configName) {
+/*function loadQueryFormConfig(configUrl, configName) {
     return (dispatch) => {
         return axios.get(configUrl + configName).then((response) => {
             let config = response.data;
@@ -121,14 +126,14 @@ function loadQueryFormConfig(configUrl, configName) {
             dispatch(configureQueryFormError(e));
         });
     };
-}
+}*/
 
 module.exports = {
     QUERYFORM_CONFIG_LOADED,
     FEATURETYPE_CONFIG_LOADED,
     EXPAND_FILTER_PANEL,
     QUERYFORM_CONFIG_LOAD_ERROR,
-    loadQueryFormConfig,
+    // loadQueryFormConfig,
     loadFeatureTypeConfig,
     configureQueryForm,
     expandFilterPanel,
