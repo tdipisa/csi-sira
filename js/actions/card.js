@@ -94,7 +94,7 @@ function loadCardTemplate(templateConfigURL, wfsUrl) {
 function selectRows(tableId, rows) {
     return {
         type: SELECT_ROWS,
-        table_id: tableId,
+        tableId: tableId,
         rows: rows
     };
 }

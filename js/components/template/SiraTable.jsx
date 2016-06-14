@@ -41,6 +41,20 @@ const SiraTable = React.createClass({
             selectRows: () => {}
         };
     },
+    /*shouldComponentUpdate(nextProps) {
+        let update = typeof nextProps.features === "function";
+
+        if (this.props.dependsOn && nextProps.features && !update) {
+            update = nextProps.features.length !== this.props.features.length;
+            if (!update) {
+                nextProps.features.forEach((feature, index) => {
+                    update = feature.columnNumber !== this.props.features[index].columnNumber;
+                }, this);
+            }
+        }
+
+        return update;
+    },*/
     render() {
         let features;
         if (typeof this.props.features === 'function') {
@@ -74,7 +88,10 @@ const SiraTable = React.createClass({
             </div>);
     },
     selectRows(params) {
-        this.props.selectRows(this.props.id, (params.selectedRows[0]) ? params.selectedRows[0].id : null);
+        // this.props.selectRows(this.props.id, (params.selectedRows[0]) ? params.selectedRows[0].id : null);
+        if (params.selectedRows[0]) {
+            this.props.selectRows(this.props.id, params.selectedRows[0].id);
+        }
     }
 });
 

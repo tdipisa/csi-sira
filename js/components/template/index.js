@@ -15,6 +15,7 @@ const SiraTable = require("./SiraTable");
 
 
 const TemplateUtils = require('../../utils/TemplateUtils');
+const ProfileWrapper = require('./ProfileWrapper');
 
 const renderSira = function(comp, props) {
     let model = props.model;

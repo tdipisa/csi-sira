@@ -51,7 +51,7 @@ function cardtemplate(state = initialState, action) {
         case SELECT_ROWS: {
             // let model = assign({}, state.model);
             // model[action.table_id] = action.rows;
-            return assign({}, state, {[action.table_id]: action.rows});
+            return assign({}, state, {[action.tableId]: action.rows});
         }
         /* case SET_IMPIANTO_MODEL: {
             return assign({}, state, {impiantoModel: action.impiantoModel});
