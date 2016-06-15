@@ -186,6 +186,10 @@ const MeasureComponent = connect((state) => {
     toggleMeasure: changeMeasurementState
 })(require('../../MapStore2/web/client/components/mapcontrols/measure/MeasureComponent'));
 
+const {
+    loadFeatureTypeConfig
+} = require('../actions/siradec');
+
 let MapInfoUtils = require('../../MapStore2/web/client/utils/MapInfoUtils');
 MapInfoUtils.AVAILABLE_FORMAT = ['TEXT', 'JSON', 'HTML', 'GML3'];
 
@@ -194,20 +198,39 @@ const Sira = React.createClass({
         params: React.PropTypes.shape({
             profile: React.PropTypes.string
         }),
-        featureGrigConfigUrl: React.PropTypes.string,
+        // featureGrigConfigUrl: React.PropTypes.string,
+        featureTypeConfigUrl: React.PropTypes.string,
         error: React.PropTypes.object,
         loading: React.PropTypes.bool,
         // card: React.PropTypes.string,
         nsResolver: React.PropTypes.func,
         controls: React.PropTypes.object,
         toggleSiraControl: React.PropTypes.func,
-        setProfile: React.PropTypes.func
+        setProfile: React.PropTypes.func,
+        onLoadFeatureTypeConfig: React.PropTypes.func
     },
     getDefaultProps() {
-        return {};
+        return {
+            featureTypeConfigUrl: "assets/aua.json",
+            toggleSiraControl: () => {},
+            setProfile: () => {},
+            onLoadFeatureTypeConfig: () => {}
+        };
     },
     componentWillMount() {
         this.props.setProfile(this.props.params.profile, authParams[this.props.params.profile]);
+    },
+    componentDidMount() {
+        if (this.props.featureTypeConfigUrl) {
+            this.props.onLoadFeatureTypeConfig(
+                this.props.featureTypeConfigUrl, {authkey: authParams[this.props.params.profile].authkey});
+        }
+    },
+    componentWillReceiveProps(props) {
+        let fturl = props.featureTypeConfigUrl;
+        if (fturl !== this.props.featureTypeConfigUrl) {
+            this.props.onLoadFeatureTypeConfig(url, {authkey: authParams[this.props.params.profile].authkey});
+        }
     },
     render() {
         /*let card = this.props.card.xml ? (
@@ -228,10 +251,14 @@ const Sira = React.createClass({
                     <SiraMap
                         params={{authkey: authParams[this.props.params.profile].authkey}}/>
                     <SiraQueryPanel
-                        authParam={authParams[this.props.params.profile]}/>
+                        params={{
+                            authkey: authParams[this.props.params.profile].authkey
+                        }}/>
                     <SiraFeatureGrid
-                        authParam={authParams[this.props.params.profile]}
-                        featureGrigConfigUrl={this.props.featureGrigConfigUrl}
+                        params={{
+                            authkey: authParams[this.props.params.profile].authkey
+                        }}
+                        // featureGrigConfigUrl={this.props.featureGrigConfigUrl}
                         profile={this.props.params.profile}/>
 
                     <Card authParam={authParams[this.props.params.profile]}/>
@@ -330,10 +357,11 @@ module.exports = connect((state) => {
         loading: !state.config || !state.locale || false,
         error: state.loadingError || (state.locale && state.locale.localeError) || null,
         // card: state.cardtemplate,
-        controls: state.siraControls,
-        featureGrigConfigUrl: state.grid.featureGrigConfigUrl
+        controls: state.siraControls
+        // featureGrigConfigUrl: state.grid.featureGrigConfigUrl
     };
 }, {
     toggleSiraControl,
-    setProfile
+    setProfile,
+    onLoadFeatureTypeConfig: loadFeatureTypeConfig
 })(Sira);

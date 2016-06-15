@@ -80,6 +80,7 @@ const Card = React.createClass({
         const authParam = this.props.authParam;
         const model = assign({}, this.props.card, {
             authParam: authParam,
+            profile: authParam.userName,
             getValue: (element) => TemplateUtils.getValue(xml, element)
         });
 

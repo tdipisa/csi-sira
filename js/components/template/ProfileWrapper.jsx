@@ -18,13 +18,7 @@ const ProfileWrapper = React.createClass({
         };
     },
     render() {
-        const Element = React.cloneElement(
-            React.Children.toArray(this.props.children)
-        );
-
-        return (
-            Element
-        );
+        return this.props.condition() ? <div>{this.props.children}</div> : <div/>;
     }
 });
 

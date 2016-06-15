@@ -11,6 +11,7 @@ const QUERYFORM_CONFIG_LOADED = 'QUERYFORM_CONFIG_LOADED';
 const FEATURETYPE_CONFIG_LOADED = 'FEATURETYPE_CONFIG_LOADED';
 const EXPAND_FILTER_PANEL = 'EXPAND_FILTER_PANEL';
 const QUERYFORM_CONFIG_LOAD_ERROR = 'QUERYFORM_CONFIG_LOAD_ERROR';
+const FEATUREGRID_CONFIG_LOADED = 'FEATUREGRID_CONFIG_LOADED';
 
 const assign = require('object-assign');
 const ConfigUtils = require('../../MapStore2/web/client/utils/ConfigUtils');
@@ -27,6 +28,13 @@ function configureFeatureType(ft, field) {
 function configureQueryForm(config) {
     return {
         type: QUERYFORM_CONFIG_LOADED,
+        config: config
+    };
+}
+
+function configureFeatureGrid(config) {
+    return {
+        type: FEATUREGRID_CONFIG_LOADED,
         config: config
     };
 }
@@ -94,15 +102,19 @@ function loadFeatureTypeConfig(url, params) {
                 }
             }
 
-            for (let field in config.fields) {
+            // Configure QueryForm attributes
+            for (let field in config.query.fields) {
                 if (field) {
-                    let f = config.fields[field];
+                    let f = config.query.fields[field];
 
                     let urlParams = f.valueService && f.valueService.urlParams ? assign({}, params, f.valueService.urlParams) : params;
 
                     dispatch(getAttributeValues({id: config.featureTypeName, name: config.featureTypeNameLabel}, f, urlParams));
                 }
             }
+
+            // Configure the FeatureGrid for WFS results list
+            dispatch(configureFeatureGrid(config.featuregrid));
         }).catch((e) => {
             dispatch(configureQueryFormError(e));
         });
@@ -133,6 +145,8 @@ module.exports = {
     FEATURETYPE_CONFIG_LOADED,
     EXPAND_FILTER_PANEL,
     QUERYFORM_CONFIG_LOAD_ERROR,
+    FEATUREGRID_CONFIG_LOADED,
+    configureFeatureGrid,
     // loadQueryFormConfig,
     loadFeatureTypeConfig,
     configureQueryForm,

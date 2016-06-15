@@ -24,8 +24,8 @@ const {loadLocale} = require('../MapStore2/web/client/actions/locale');
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
 const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
 
-const {configureQueryForm} = require('./actions/queryform');
-const {configureGrid} = require('./actions/grid');
+const {configureQueryForm, configureFeatureGrid} = require('./actions/siradec');
+// const {configureGrid} = require('./actions/grid');
 
 function startApp() {
     const App = require('./containers/App');
@@ -44,8 +44,9 @@ function startApp() {
             // "/sira/services/queryformconfig/aua"
             // store.dispatch(loadQueryFormConfig("assets/", "queryFormConfig.json"));
 
-            store.dispatch(configureQueryForm(ConfigUtils.getConfigProp("queryForm")));
-            store.dispatch(configureGrid(ConfigUtils.getConfigProp("featureGrid")));
+            store.dispatch(configureQueryForm(ConfigUtils.getConfigProp("query")));
+            store.dispatch(configureFeatureGrid(ConfigUtils.getConfigProp("featuregrid")));
+            // store.dispatch(configureGrid(ConfigUtils.getConfigProp("featuregrid")));
         });
 
     ReactDOM.render(

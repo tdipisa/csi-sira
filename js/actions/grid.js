@@ -5,6 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 const axios = require('../../MapStore2/web/client/libs/ajax');
 const ConfigUtils = require('../../MapStore2/web/client/utils/ConfigUtils');
 
@@ -20,10 +21,10 @@ function configureGrid(config) {
     };
 }
 
-function configureGridModel(model) {
+function configureGridData(data) {
     return {
         type: GRID_MODEL_LOADED,
-        model: model
+        data: data
     };
 }
 
@@ -49,7 +50,7 @@ function loadGridModel(wfsUrl, params) {
 
     return (dispatch) => {
         return axios.get(wfsUrl).then((response) => {
-            dispatch(configureGridModel(response.data));
+            dispatch(configureGridData(response.data));
         }).catch((e) => {
             dispatch(configureGridError(e));
         });
@@ -71,7 +72,7 @@ function loadGridModelWithFilter(wfsUrl, data, params) {
           timeout: 10000,
           headers: {'Accept': 'text/xml', 'Content-Type': 'text/plain'}
         }).then((response) => {
-            dispatch(configureGridModel(response.data));
+            dispatch(configureGridData(response.data));
         }).catch((e) => {
             dispatch(configureGridError(e));
         });
@@ -102,7 +103,7 @@ module.exports = {
     GRID_CONFIG_LOADED,
     SHOW_LOADING,
     configureGrid,
-    configureGridModel,
+    configureGridData,
     // loadFeatureGridConfig,
     loadGridModel,
     loadGridModelWithFilter,

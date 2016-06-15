@@ -33,7 +33,10 @@ const LabeledField = React.createClass({
                     </Col>
                     <Col className="value-sira" xs={7} sm={7} md={7} lg={7}>
                         {
-                            this.props.value ? this.props.value : <span className="labeledfield-no-value">{LocaleUtils.getMessageById(this.context.messages, "labeledfield.label_value_not_specified")}</span>
+                            this.props.value ? this.props.value :
+                                <span className="labeledfield-no-value">
+                                    {LocaleUtils.getMessageById(this.context.messages, "labeledfield.label_value_not_specified")}
+                                </span>
                         }
                     </Col>
                 </Row>

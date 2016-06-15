@@ -22,11 +22,15 @@ const SiraTable = React.createClass({
         id: React.PropTypes.string,
         card: React.PropTypes.object,
         style: React.PropTypes.object,
-        columnDefs: React.PropTypes.array,
+        columns: React.PropTypes.array,
         dependsOn: React.PropTypes.object,
         features: React.PropTypes.oneOfType([
             React.PropTypes.array,
             React.PropTypes.func
+        ]),
+        rowSelection: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.bool
         ]),
         selectRows: React.PropTypes.func
     },
@@ -37,7 +41,8 @@ const SiraTable = React.createClass({
             features: [],
             card: null,
             dependsOn: null,
-            columnDefs: [],
+            columns: [],
+            rowSelection: "single",
             selectRows: () => {}
         };
     },
@@ -62,7 +67,7 @@ const SiraTable = React.createClass({
         } else {
             features = this.props.features.map((feature) => {
                 let f = {};
-                this.props.columnDefs.forEach((column) => {
+                this.props.columns.forEach((column) => {
                     if (column.field) {
                         f[column.field] = TemplateUtils.getElement({xpath: column.xpath}, feature);
                     }
@@ -80,10 +85,16 @@ const SiraTable = React.createClass({
         return (
             <div fluid={false} style={this.props.style} className="ag-blue">
                 <AgGridReact
-                    rowSelection="single"
                     rowData={features}
                     onSelectionChanged={this.selectRows}
                     enableColResize={true}
+                    columnDefs={
+                        this.props.rowSelection === "single" ? [{
+                            checkboxSelection: true,
+                            width: 30,
+                            headerName: ''
+                        }, ...this.props.columns] : this.props.columns
+                    }
                     {...this.props}/>
             </div>);
     },

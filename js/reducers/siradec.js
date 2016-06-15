@@ -10,8 +10,9 @@ const {
     QUERYFORM_CONFIG_LOADED,
     FEATURETYPE_CONFIG_LOADED,
     EXPAND_FILTER_PANEL,
-    QUERYFORM_CONFIG_LOAD_ERROR
-} = require('../actions/queryform');
+    QUERYFORM_CONFIG_LOAD_ERROR,
+    FEATUREGRID_CONFIG_LOADED
+} = require('../actions/siradec');
 
 const assign = require('object-assign');
 
@@ -19,10 +20,11 @@ const initialState = {
     filterPanelExpanded: true,
     attributes: [],
     loadingQueryFormConfigError: null,
-    queryform: null
+    queryform: null,
+    featuregrid: null
 };
 
-function queryformconfig(state = initialState, action) {
+function siradec(state = initialState, action) {
     switch (action.type) {
         case FEATURETYPE_CONFIG_LOADED: {
             let attributes = [...state.attributes, action.field];
@@ -43,6 +45,11 @@ function queryformconfig(state = initialState, action) {
                 queryform: action.config
             });
         }
+        case FEATUREGRID_CONFIG_LOADED: {
+            return assign({}, state, {
+                featuregrid: action.config
+            });
+        }
         case EXPAND_FILTER_PANEL: {
             return assign({}, state, {
                 filterPanelExpanded: action.expand
@@ -58,4 +65,4 @@ function queryformconfig(state = initialState, action) {
     }
 }
 
-module.exports = queryformconfig;
+module.exports = siradec;

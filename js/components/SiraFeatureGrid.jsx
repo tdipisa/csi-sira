@@ -41,7 +41,9 @@ const Spinner = require('react-spinkit');
 const {
     // SiraQueryPanel action functions
     expandFilterPanel
-} = require('../actions/queryform');
+} = require('../actions/siradec');
+
+const assign = require('object-assign');
 
 const SiraFeatureGrid = React.createClass({
     propTypes: {
@@ -51,14 +53,15 @@ const SiraFeatureGrid = React.createClass({
         header: React.PropTypes.string,
         features: React.PropTypes.array,
         detailsConfig: React.PropTypes.object,
+        columnsDef: React.PropTypes.array,
         map: React.PropTypes.object,
         loadingGrid: React.PropTypes.bool,
         loadingGridError: React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.object
         ]),
-        authParam: React.PropTypes.object,
-        featureGrigConfigUrl: React.PropTypes.string,
+        params: React.PropTypes.object,
+        // featureGrigConfigUrl: React.PropTypes.string,
         profile: React.PropTypes.string,
         onDetail: React.PropTypes.func,
         onShowDetail: React.PropTypes.func,
@@ -76,13 +79,14 @@ const SiraFeatureGrid = React.createClass({
             detailOpen: true,
             loadingGrid: false,
             loadingGridError: null,
-            featureGrigConfigUrl: null,
+            // featureGrigConfigUrl: null,
             profile: null,
             expanded: true,
             header: "featuregrid.header",
             features: [],
-            authParam: null,
+            params: null,
             detailsConfig: {},
+            columnsDef: [],
             onDetail: () => {},
             onShowDetail: () => {},
             toggleSiraControl: () => {},
@@ -156,7 +160,7 @@ const SiraFeatureGrid = React.createClass({
             );
         }
 
-        let columns = [{
+        /*let columns = [{
             onCellClicked: this.goToDetail,
             headerName: '',
             cellRenderer: reactCellRendererFactory(GoToDetail),
@@ -169,9 +173,24 @@ const SiraFeatureGrid = React.createClass({
             headerName: 'Codice SIRA',
             field: "properties.codice",
             width: 100
-        }];
+        }];*/
 
-        if (this.props.profile === "B") {
+        let columns = [{
+            onCellClicked: this.goToDetail,
+            headerName: '',
+            cellRenderer: reactCellRendererFactory(GoToDetail),
+            suppressSorting: true,
+            suppressMenu: true,
+            pinned: true,
+            width: 25,
+            suppressResize: true
+        }, ...this.props.columnsDef.map((column) => {
+            if (!column.profiles || (column.profiles && column.profiles.indexOf(this.props.profile) !== -1)) {
+                return assign({}, column, {field: "properties." + column.field});
+            }
+        })];
+
+        /*if (this.props.profile === "B") {
             columns.push({
                 headerName: 'Codice fiscale (P.IVA)',
                 field: "properties.codicefisc"
@@ -187,7 +206,7 @@ const SiraFeatureGrid = React.createClass({
             headerName: 'Autorizzazioni ambientali',
             field: "properties.autamb",
             width: this.props.profile === "B" ? 250 : 445
-        });
+        });*/
 
         if (this.props.open) {
             return (
@@ -228,10 +247,18 @@ const SiraFeatureGrid = React.createClass({
         return null;
     },
     goToDetail(params) {
+        let url = this.props.detailsConfig.service.url;
+        let urlParams = this.props.detailsConfig.service.params;
+        for (let param in urlParams) {
+            if (urlParams.hasOwnProperty(param)) {
+                url += "&" + param + "=" + urlParams[param];
+            }
+        }
+
         this.props.onDetail(
-            this.props.detailsConfig.cardTemplateConfigUrl,
+            this.props.detailsConfig.template,
             // this.props.detailsConfig.cardModelConfigUrl,
-            this.props.detailsConfig.wfsUrl + "&FEATUREID=" + params.data.id + "&authkey=" + this.props.authParam.authkey
+            url + "&FEATUREID=" + params.data.id + (this.props.params.authkey ? "&authkey=" + this.props.params.authkey : "")
         );
 
         if (!this.props.detailOpen) {
@@ -243,8 +270,9 @@ const SiraFeatureGrid = React.createClass({
 module.exports = connect((state) => ({
     open: state.siraControls.grid,
     detailOpen: state.siraControls.detail,
-    detailsConfig: state.grid.detailsConfig,
-    features: state.grid && state.grid.model || [],
+    detailsConfig: state.grid.featuregrid && state.grid.featuregrid.card || {},
+    columnsDef: state.grid.featuregrid && state.grid.featuregrid.grid ? state.grid.featuregrid.grid.columns : [],
+    features: state.grid && state.grid.data || [],
     map: (state.map && state.map) || (state.config && state.config.map),
     loadingGrid: state.grid.loadingGrid,
     loadingGridError: state.grid.loadingGridError
