@@ -184,11 +184,11 @@ const SiraFeatureGrid = React.createClass({
             pinned: true,
             width: 25,
             suppressResize: true
-        }, ...this.props.columnsDef.map((column) => {
+        }, ...(this.props.columnsDef.map((column) => {
             if (!column.profiles || (column.profiles && column.profiles.indexOf(this.props.profile) !== -1)) {
                 return assign({}, column, {field: "properties." + column.field});
             }
-        })];
+        })).filter((c) => c )];
 
         /*if (this.props.profile === "B") {
             columns.push({
