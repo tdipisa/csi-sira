@@ -34,11 +34,21 @@ function siradec(state = initialState, action) {
                 return attA.index - attB.index;
             });
 
-            return assign({}, state, {
+            let newState = assign({}, state, {
                 attributes: attributes,
                 featureTypeName: action.ftName,
                 featureTypeNameLabel: action.ftNameLabel
             });
+
+            if (newState.queryform) {
+                newState = assign({}, newState, {queryform: assign({}, newState.queryform, {geometryName: action.geometryName})});
+            }
+
+            if (newState.featuregrid) {
+                newState = assign({}, newState, {featuregrid: assign({}, state.featuregrid, {geometryType: action.geometryType})});
+            }
+
+            return newState;
         }
         case QUERYFORM_CONFIG_LOADED: {
             return assign({}, state, {

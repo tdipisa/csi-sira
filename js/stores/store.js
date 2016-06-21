@@ -64,8 +64,17 @@ const rootReducer = (state = {}, action) => {
         queryformState = assign({}, queryformState, siradecState.queryform);
     }
 
+    if (queryformState.searchUrl && (siradecState.queryform && siradecState.queryform.geometryName)) {
+        queryformState = assign({}, queryformState, {spatialField: assign({}, queryformState.spatialField, {attribute: siradecState.queryform.geometryName})});
+    }
+
     if (!gridState.featuregrid && siradecState.featuregrid) {
         gridState = assign({}, gridState, {featuregrid: siradecState.featuregrid});
+    }
+
+    if (siradecState.featuregrid && siradecState.featuregrid.geometryType) {
+        gridState = assign({}, gridState, {
+            featuregrid: assign({}, gridState.featuregrid, {grid: assign({}, gridState.featuregrid.grid, {geometryType: siradecState.featuregrid.geometryType})})});
     }
 
     let newState = assign({}, {...allReducers(state, action)}, {

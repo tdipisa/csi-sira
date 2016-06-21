@@ -29,7 +29,7 @@
 	  }],
 	  "spatialField": {
 	      "method": null,
-	      "attribute": "geometria",
+	      "attribute": null,
 	      "operation": "INTERSECTS",
 	      "geometry": null
 	  }

@@ -1,6 +1,8 @@
 {
    "featureTypeName":"sira:AutorizzazioneUnicaAmbientale",
    "featureTypeNameLabel":"AUA - IMPIANTI DI RECUPERO ENERGIA E MATERIA",
+   "geometryName": "geometria",
+   "geometryType": "Point",
    "featuregrid": {
      "card": {
        "template": "assets/cardTemplate.config",
@@ -15,7 +17,6 @@
      },
      "grid": {
        "root": "/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale",
-       "geometryType": "Point",
        "columns": [
          {
            "field": "id",

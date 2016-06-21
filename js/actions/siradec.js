@@ -21,6 +21,8 @@ function configureFeatureType(ft, field) {
         type: FEATURETYPE_CONFIG_LOADED,
         ftName: ft.id,
         ftNameLabel: ft.name,
+        geometryName: ft.geometryName,
+        geometryType: ft.geometryType,
         field: field
     };
 }
@@ -53,7 +55,7 @@ function configureQueryFormError(e) {
     };
 }
 
-function getAttributeValues(ftName, field, params) {
+function getAttributeValues(ft, field, params) {
     return (dispatch) => {
         if (field.valueService && field.valueService.url) {
             let {url} = ConfigUtils.setUrlPlaceholders({url: field.valueService.url});
@@ -80,13 +82,13 @@ function getAttributeValues(ftName, field, params) {
                         values.push(config.features[feature].properties);
                     }
                 }
-                dispatch(configureFeatureType(ftName, assign({}, field, {values: values})));
+                dispatch(configureFeatureType(ft, assign({}, field, {values: values})));
             }).catch((e) => {
                 dispatch(configureQueryFormError(e));
             });
         }
 
-        dispatch(configureFeatureType(ftName, assign({}, field, {})));
+        dispatch(configureFeatureType(ft, assign({}, field, {})));
     };
 }
 
@@ -109,7 +111,12 @@ function loadFeatureTypeConfig(url, params) {
 
                     let urlParams = f.valueService && f.valueService.urlParams ? assign({}, params, f.valueService.urlParams) : params;
 
-                    dispatch(getAttributeValues({id: config.featureTypeName, name: config.featureTypeNameLabel}, f, urlParams));
+                    dispatch(getAttributeValues({
+                        id: config.featureTypeName,
+                        name: config.featureTypeNameLabel,
+                        geometryName: config.geometryName,
+                        geometryType: config.geometryType
+                    }, f, urlParams));
                 }
             }
 
