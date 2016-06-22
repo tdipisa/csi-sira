@@ -64,8 +64,7 @@
           "layerName": "ZONES_IPR",
           "layerTitle": "Zonizzazione qualita' dell'aria vigente",
           "geomAttribute": "msGeometry",
-          "geometryType": "Polygon",
-          "topologyModelURL": "assets/topologyModelConfig.json"
+          "geometryType": "Polygon"
         },
   			"group": "Oggetti",
   			"format": "image/png"

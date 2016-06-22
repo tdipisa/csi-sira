@@ -176,7 +176,8 @@ function mapInfo(state = initialState, action) {
 
         case CONFIGURE_INFO_TOPOLOGY: {
             // let modelConfig = assign({}, state.modelConfig, {[action.layerId]: action.modelConfig.modelConfig});
-            let topologyConfig = assign({}, state.topologyConfig, {[action.layerId]: action.topologyConfig});
+            let topologyConfig = assign({}, action.topologyConfig, {modelConfig: action.modelConfig});
+            topologyConfig = assign({}, state.topologyConfig, {[action.layerId]: topologyConfig});
             let infoTopologyResponse = assign({}, state.infoTopologyResponse, {[action.layerId]: action.infoTopologyResponse});
 
             return assign({}, state, {

@@ -117,6 +117,7 @@ function getFeatureInfo(wmsBasePath, requestParams, lMetaData, options = {}, top
                         dispatch(topologyOptions.callback(
                             topologyOptions.layerId,
                             topologyOptions.topologyConfig,
+                            topologyOptions.modelConfig,
                             topologyOptions.filter,
                             {reqId: reqId, response: response.data, requestParams: requestParams, lMetaData: lMetaData}
                         ));
@@ -268,7 +269,7 @@ function loadTopologyInfoWithFilter(layerId, modelConfig, topologyConfig, filter
             let infoTopologyResponse = response.data;
 
             let features = TemplateUtils.getModels(infoTopologyResponse,
-                modelConfig.modelConfig.root, modelConfig.modelConfig.config, "1.1.0");
+                modelConfig.root, modelConfig.columns, "1.1.0");
 
             let data = {
                 "type": "FeatureCollection",
@@ -321,9 +322,12 @@ function loadTopologyInfoWithFilter(layerId, modelConfig, topologyConfig, filter
     };
 }
 
-function loadInfoTopologyConfig(layerId, topologyConfig, filter, infoParams) {
+function loadInfoTopologyConfig(layerId, topologyConfig, modelConfig, filter, infoParams) {
     return (dispatch) => {
-        return axios.get(topologyConfig.topologyModelURL).then((response) => {
+        dispatch(loadFeatureInfo(infoParams.reqId, infoParams.response, infoParams.requestParams, infoParams.lMetaData));
+        dispatch(loadTopologyInfoWithFilter(layerId, modelConfig, topologyConfig, filter));
+
+        /*return axios.get(topologyConfig.topologyModelURL).then((response) => {
             let modelConfig = response.data;
             if (typeof modelConfig !== "object") {
                 try {
@@ -337,7 +341,7 @@ function loadInfoTopologyConfig(layerId, topologyConfig, filter, infoParams) {
             dispatch(loadTopologyInfoWithFilter(layerId, modelConfig, topologyConfig, filter));
         }).catch((e) => {
             dispatch(configureInfoTopologyConfigError(layerId, e));
-        });
+        });*/
     };
 }
 

@@ -12,7 +12,8 @@ const {
     EXPAND_FILTER_PANEL,
     QUERYFORM_CONFIG_LOAD_ERROR,
     FEATUREGRID_CONFIG_LOADED,
-    FEATUREINFO_CONFIG_LOADED
+    FEATUREINFO_CONFIG_LOADED,
+    TOPOLOGY_CONFIG_LOADED
 } = require('../actions/siradec');
 
 const assign = require('object-assign');
@@ -65,6 +66,11 @@ function siradec(state = initialState, action) {
         case FEATUREINFO_CONFIG_LOADED: {
             return assign({}, state, {
                 featureinfo: action.config
+            });
+        }
+        case TOPOLOGY_CONFIG_LOADED: {
+            return assign({}, state, {
+                topology: action.config
             });
         }
         case EXPAND_FILTER_PANEL: {

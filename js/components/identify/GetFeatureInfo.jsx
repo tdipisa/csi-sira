@@ -16,7 +16,7 @@ const {bindActionCreators} = require('redux');
 const {setFeatures} = require('../../../MapStore2/web/client/actions/featuregrid');
 
 const TopologyInfoViewer = connect((state) => ({
-    modelConfig: state.mapInfo.modelConfig,
+    // modelConfig: state.mapInfo.modelConfig,
     topologyConfig: state.mapInfo.topologyConfig,
     infoTopologyResponse: state.mapInfo.infoTopologyResponse
 }), (dispatch) => {
@@ -78,6 +78,8 @@ const GetFeatureInfo = React.createClass({
 
         siraFeatureTypeName: React.PropTypes.string,
         siraFeatureInfoDetails: React.PropTypes.object,
+        siraTopology: React.PropTypes.object,
+        siraTopologyConfig: React.PropTypes.object,
         profile: React.PropTypes.string,
         detailsConfig: React.PropTypes.object,
         // modelConfig: React.PropTypes.object,
@@ -88,6 +90,8 @@ const GetFeatureInfo = React.createClass({
         return {
             siraFeatureTypeName: null,
             siraFeatureInfoDetails: null,
+            siraTopology: null,
+            siraTopologyConfig: null,
             profile: null,
             infoEnabled: false,
             topologyInfoEnabled: false,
@@ -178,7 +182,7 @@ const GetFeatureInfo = React.createClass({
 
                     // Load the template if required
                     let topologyOptions = {};
-                    if (layer.topologyConfig && layer.topologyConfig.topologyModelURL) {
+                    if (layer.topologyConfig && layer.name === this.props.siraFeatureTypeName /*layer.topologyConfig.topologyModelURL*/) {
                         let topologyConfig = assign({}, layer.topologyConfig, {clickedMapPoint: newProps.clickedMapPoint});
 
                         let filterObj = {
@@ -206,6 +210,7 @@ const GetFeatureInfo = React.createClass({
                         let filter = FilterUtils.toOGCFilter(topologyConfig.layerName, filterObj, "1.1.0");
 
                         topologyOptions.topologyConfig = topologyConfig;
+                        topologyOptions.modelConfig = this.props.siraTopology.grid;
                         topologyOptions.layerId = layer.id;
                         topologyOptions.filter = filter;
                         topologyOptions.callback = loadInfoTopologyConfig;
@@ -252,7 +257,7 @@ const GetFeatureInfo = React.createClass({
                     display={this.props.display}/>
             );
         } else {
-            if (/*this.props.modelConfig*/ this.props.detailsConfig) {
+            if (/*this.props.modelConfig*/ this.props.siraTopologyConfig) {
                 component = (
                     <TopologyInfoViewer
                         missingRequests={missingRequests}

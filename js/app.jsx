@@ -24,7 +24,7 @@ const {loadLocale} = require('../MapStore2/web/client/actions/locale');
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
 const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
 
-const {configureQueryForm/*, configureFeatureGrid*/} = require('./actions/siradec');
+const {configureQueryForm, configureTopology/*, configureFeatureGrid*/} = require('./actions/siradec');
 // const {configureGrid} = require('./actions/grid');
 
 function startApp() {
@@ -45,6 +45,7 @@ function startApp() {
             // store.dispatch(loadQueryFormConfig("assets/", "queryFormConfig.json"));
 
             store.dispatch(configureQueryForm(ConfigUtils.getConfigProp("query")));
+            store.dispatch(configureTopology(ConfigUtils.getConfigProp("topology")));
             // store.dispatch(configureFeatureGrid(ConfigUtils.getConfigProp("featuregrid")));
 
             // store.dispatch(configureGrid(ConfigUtils.getConfigProp("featuregrid")));

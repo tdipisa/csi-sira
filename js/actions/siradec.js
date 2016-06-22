@@ -13,6 +13,7 @@ const EXPAND_FILTER_PANEL = 'EXPAND_FILTER_PANEL';
 const QUERYFORM_CONFIG_LOAD_ERROR = 'QUERYFORM_CONFIG_LOAD_ERROR';
 const FEATUREGRID_CONFIG_LOADED = 'FEATUREGRID_CONFIG_LOADED';
 const FEATUREINFO_CONFIG_LOADED = 'FEATUREINFO_CONFIG_LOADED';
+const TOPOLOGY_CONFIG_LOADED = 'TOPOLOGY_CONFIG_LOADED';
 
 const assign = require('object-assign');
 const ConfigUtils = require('../../MapStore2/web/client/utils/ConfigUtils');
@@ -38,6 +39,12 @@ function configureQueryForm(config) {
 function configureFeatureGrid(config) {
     return {
         type: FEATUREGRID_CONFIG_LOADED,
+        config: config
+    };
+}
+function configureTopology(config) {
+    return {
+        type: TOPOLOGY_CONFIG_LOADED,
         config: config
     };
 }
@@ -163,6 +170,8 @@ module.exports = {
     QUERYFORM_CONFIG_LOAD_ERROR,
     FEATUREGRID_CONFIG_LOADED,
     FEATUREINFO_CONFIG_LOADED,
+    TOPOLOGY_CONFIG_LOADED,
+    configureTopology,
     configureFeatureGrid,
     // loadQueryFormConfig,
     loadFeatureTypeConfig,

@@ -35,9 +35,9 @@
 	  }
 	},
 	"topology": {
-	  "modelConfig": {
+	  "grid": {
 	    "root": "/wfs:FeatureCollection/gml:featureMember/ms:ZONES_IPR",
-	    "config": [
+	    "columns": [
 	      {
 	        "field": "id",
 	        "header": "Id",

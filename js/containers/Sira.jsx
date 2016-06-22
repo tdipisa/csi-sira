@@ -90,6 +90,8 @@ const {selectFeatures, setFeatures} = require('../actions/featuregrid');
 const GetFeatureInfo = connect((state) => ({
     siraFeatureTypeName: state.siradec.featureTypeName,
     siraFeatureInfoDetails: state.siradec.featureinfo,
+    siraTopology: state.siradec.topology,
+    siraTopologyConfig: state.mapInfo.topologyConfig,
     infoEnabled: state.mapInfo && state.mapInfo.infoEnabled || false,
     topologyInfoEnabled: state.mapInfo && state.mapInfo.topologyInfoEnabled || false,
     htmlResponses: state.mapInfo && state.mapInfo.responses || [],
