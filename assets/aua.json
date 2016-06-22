@@ -3,6 +3,20 @@
    "featureTypeNameLabel":"AUA - IMPIANTI DI RECUPERO ENERGIA E MATERIA",
    "geometryName": "geometria",
    "geometryType": "Point",
+   "featureinfo":{
+     "templateURL": "assets/infoTemplate.config",
+     "card": {
+       "template": "assets/cardTemplate.config",
+       "service": {
+         "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+         "params": {
+           "typeName": "sira:AutorizzazioneUnicaAmbientale",
+           "version": "2.0",
+           "srsName": "EPSG:4326"
+         }
+       }
+     }
+   },
    "featuregrid": {
      "card": {
        "template": "assets/cardTemplate.config",

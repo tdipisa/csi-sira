@@ -237,9 +237,12 @@ function loadFeatureInfoTemplateConfig(layerId, templateURL) {
     };
 }
 
-function loadGetFeatureInfoConfig(layerId, infoConfigURL) {
+function loadGetFeatureInfoConfig(layerId, featureinfoconfig) {
     return (dispatch) => {
-        return axios.get(infoConfigURL).then((response) => {
+        dispatch(configureGetFeatureInfo(layerId, featureinfoconfig));
+        dispatch(loadFeatureInfoTemplateConfig(layerId, featureinfoconfig.templateURL));
+
+        /* return axios.get(infoConfigURL).then((response) => {
             let infoConfig = response.data;
             if (typeof infoConfig !== "object") {
                 try {
@@ -252,7 +255,7 @@ function loadGetFeatureInfoConfig(layerId, infoConfigURL) {
             dispatch(loadFeatureInfoTemplateConfig(layerId, infoConfig.templateURL));
         }).catch((e) => {
             dispatch(configureGetFeatureInfoError(layerId, e));
-        });
+        }); */
     };
 }
 

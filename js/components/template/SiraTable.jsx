@@ -28,6 +28,8 @@ const SiraTable = React.createClass({
             React.PropTypes.array,
             React.PropTypes.func
         ]),
+        wfsVersion: React.PropTypes.string,
+        profile: React.PropTypes.string,
         rowSelection: React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.bool
@@ -39,9 +41,11 @@ const SiraTable = React.createClass({
             id: "SiraTable",
             style: {height: "200px", width: "100%"},
             features: [],
+            wfsVersion: null,
             card: null,
             dependsOn: null,
             columns: [],
+            profile: null,
             rowSelection: "single",
             selectRows: () => {}
         };
@@ -62,18 +66,26 @@ const SiraTable = React.createClass({
     },*/
     render() {
         let features;
+
+        let columns = this.props.columns.map((column) => {
+            if (!column.profiles || (column.profiles && this.props.profile && column.profiles.indexOf(this.props.profile) !== -1)) {
+                return column;
+            }
+        }).filter((c) => c);
+
         if (typeof this.props.features === 'function') {
             features = this.props.features();
         } else {
-            features = this.props.features.map((feature) => {
+            features = this.props.features instanceof Array ? this.props.features : [this.props.features];
+            features = features.map((feature) => {
                 let f = {};
-                this.props.columns.forEach((column) => {
+                columns.forEach((column) => {
                     if (column.field) {
-                        f[column.field] = TemplateUtils.getElement({xpath: column.xpath}, feature);
+                        f[column.field] = TemplateUtils.getElement({xpath: column.xpath}, feature, this.props.wfsVersion);
                     }
                 });
                 return f;
-            });
+            }, this);
         }
 
         if (this.props.dependsOn) {
@@ -93,7 +105,7 @@ const SiraTable = React.createClass({
                             checkboxSelection: true,
                             width: 30,
                             headerName: ''
-                        }, ...this.props.columns] : this.props.columns
+                        }, ...columns] : columns
                     }
                     {...this.props}/>
             </div>);

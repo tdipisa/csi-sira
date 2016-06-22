@@ -76,14 +76,18 @@ const GetFeatureInfo = React.createClass({
         style: React.PropTypes.object,
         collapsible: React.PropTypes.bool,
 
+        siraFeatureTypeName: React.PropTypes.string,
+        siraFeatureInfoDetails: React.PropTypes.object,
         profile: React.PropTypes.string,
         detailsConfig: React.PropTypes.object,
-        modelConfig: React.PropTypes.object,
+        // modelConfig: React.PropTypes.object,
         template: React.PropTypes.object,
         infoType: React.PropTypes.string
     },
     getDefaultProps() {
         return {
+            siraFeatureTypeName: null,
+            siraFeatureInfoDetails: null,
             profile: null,
             infoEnabled: false,
             topologyInfoEnabled: false,
@@ -151,8 +155,8 @@ const GetFeatureInfo = React.createClass({
                     this.props.actions.getFeatureInfo(url, requestConf, layerMetadata, layer.featureInfoParams);
 
                     // Load the template if required
-                    if (layer.infoTemplateURL) {
-                        this.props.actions.loadGetFeatureInfoConfig(layer.id, layer.infoTemplateURL + this.props.profile + ".json");
+                    if (layer.name === this.props.siraFeatureTypeName) {
+                        this.props.actions.loadGetFeatureInfoConfig(layer.id, this.props.siraFeatureInfoDetails /* + this.props.profile + ".json"*/);
                     }
                 }
 
@@ -240,14 +244,15 @@ const GetFeatureInfo = React.createClass({
                     responses={this.props.htmlResponses}
                     contentConfig={{
                         template: this.props.template,
-                        detailsConfig: this.props.detailsConfig,
-                        modelConfig: this.props.modelConfig
+                        detailsConfig: this.props.detailsConfig
+                        // modelConfig: this.props.modelConfig
                     }}
+                    profile={this.props.profile}
                     params={this.props.params}
                     display={this.props.display}/>
             );
         } else {
-            if (this.props.modelConfig) {
+            if (/*this.props.modelConfig*/ this.props.detailsConfig) {
                 component = (
                     <TopologyInfoViewer
                         missingRequests={missingRequests}
@@ -297,7 +302,7 @@ const GetFeatureInfo = React.createClass({
     },
     render() {
         const renderInfoTypeCheck = this.props.infoType === "getfeatureinfo" ?
-            this.props.htmlRequests.length !== 0 && this.props.template && this.props.detailsConfig && this.props.modelConfig :
+            this.props.htmlRequests.length !== 0 && this.props.template && this.props.detailsConfig /*&& this.props.modelConfig*/ :
             this.props.htmlRequests.length !== 0;
 
         if (renderInfoTypeCheck) {

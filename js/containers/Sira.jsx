@@ -88,13 +88,15 @@ const {loadGetFeatureInfoConfig, setModelConfig} = require('../actions/mapInfo')
 const {selectFeatures, setFeatures} = require('../actions/featuregrid');
 
 const GetFeatureInfo = connect((state) => ({
+    siraFeatureTypeName: state.siradec.featureTypeName,
+    siraFeatureInfoDetails: state.siradec.featureinfo,
     infoEnabled: state.mapInfo && state.mapInfo.infoEnabled || false,
     topologyInfoEnabled: state.mapInfo && state.mapInfo.topologyInfoEnabled || false,
     htmlResponses: state.mapInfo && state.mapInfo.responses || [],
     htmlRequests: state.mapInfo && state.mapInfo.requests || {length: 0},
     infoFormat: state.mapInfo && state.mapInfo.infoFormat,
     detailsConfig: state.mapInfo.detailsConfig,
-    modelConfig: state.mapInfo.modelConfig,
+    // modelConfig: state.mapInfo.modelConfig,
     template: state.mapInfo.template,
     map: state.map,
     infoType: state.mapInfo.infoType,

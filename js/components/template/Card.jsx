@@ -15,10 +15,11 @@ const {Modal} = require('react-bootstrap');
 const {toggleSiraControl} = require("../../actions/controls");
 const toggleDetail = toggleSiraControl.bind(null, 'detail');
 
+const assign = require('object-assign');
+
 const TemplateUtils = require('../../utils/TemplateUtils');
 
 const Draggable = require('react-draggable');
-const assign = require('object-assign');
 
 require("./card.css");
 
@@ -78,6 +79,7 @@ const Card = React.createClass({
     renderCard() {
         const xml = this.props.card.xml;
         const authParam = this.props.authParam;
+
         const model = assign({}, this.props.card, {
             authParam: authParam,
             profile: authParam.userName,
