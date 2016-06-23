@@ -3,32 +3,21 @@
    "featureTypeNameLabel":"AUA - IMPIANTI DI RECUPERO ENERGIA E MATERIA",
    "geometryName": "geometria",
    "geometryType": "Point",
-   "featureinfo":{
-     "templateURL": "assets/infoTemplate.jsxt",
-     "card": {
-       "template": "assets/cardTemplate.jsxt",
-       "service": {
-         "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
-         "params": {
-           "typeName": "sira:AutorizzazioneUnicaAmbientale",
-           "version": "2.0",
-           "srsName": "EPSG:4326"
-         }
+   "card": {
+     "template": "assets/cardTemplate.jsxt",
+     "service": {
+       "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+       "params": {
+         "typeName": "sira:AutorizzazioneUnicaAmbientale",
+         "version": "2.0",
+         "srsName": "EPSG:4326"
        }
      }
    },
+   "featureinfo":{
+     "templateURL": "assets/infoTemplate.jsxt"
+   },
    "featuregrid": {
-     "card": {
-       "template": "assets/cardTemplate.jsxt",
-       "service": {
-         "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
-         "params": {
-           "typeName": "sira:AutorizzazioneUnicaAmbientale",
-           "version": "2.0",
-           "srsName": "EPSG:4326"
-         }
-       }
-     },
      "grid": {
        "root": "/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale",
        "columns": [

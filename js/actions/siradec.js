@@ -14,6 +14,7 @@ const QUERYFORM_CONFIG_LOAD_ERROR = 'QUERYFORM_CONFIG_LOAD_ERROR';
 const FEATUREGRID_CONFIG_LOADED = 'FEATUREGRID_CONFIG_LOADED';
 const FEATUREINFO_CONFIG_LOADED = 'FEATUREINFO_CONFIG_LOADED';
 const TOPOLOGY_CONFIG_LOADED = 'TOPOLOGY_CONFIG_LOADED';
+const CARD_CONFIG_LOADED = 'CARD_CONFIG_LOADED';
 
 const assign = require('object-assign');
 const ConfigUtils = require('../../MapStore2/web/client/utils/ConfigUtils');
@@ -42,6 +43,14 @@ function configureFeatureGrid(config) {
         config: config
     };
 }
+
+function configureCard(config) {
+    return {
+        type: CARD_CONFIG_LOADED,
+        config: config
+    };
+}
+
 function configureTopology(config) {
     return {
         type: TOPOLOGY_CONFIG_LOADED,
@@ -141,6 +150,7 @@ function loadFeatureTypeConfig(url, params) {
             // Configure the FeatureGrid for WFS results list
             dispatch(configureFeatureGrid(config.featuregrid));
             dispatch(configureFeatureInfo(config.featureinfo));
+            dispatch(configureCard(config.card));
         }).catch((e) => {
             dispatch(configureQueryFormError(e));
         });
@@ -174,8 +184,10 @@ module.exports = {
     FEATUREGRID_CONFIG_LOADED,
     FEATUREINFO_CONFIG_LOADED,
     TOPOLOGY_CONFIG_LOADED,
+    CARD_CONFIG_LOADED,
     configureTopology,
     configureFeatureGrid,
+    configureCard,
     // loadQueryFormConfig,
     loadFeatureTypeConfig,
     configureQueryForm,

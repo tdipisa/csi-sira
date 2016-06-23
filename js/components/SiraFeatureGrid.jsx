@@ -270,7 +270,7 @@ const SiraFeatureGrid = React.createClass({
 module.exports = connect((state) => ({
     open: state.siraControls.grid,
     detailOpen: state.siraControls.detail,
-    detailsConfig: state.grid.featuregrid && state.grid.featuregrid.card || {},
+    detailsConfig: state.siradec && state.siradec.card || {},
     columnsDef: state.grid.featuregrid && state.grid.featuregrid.grid ? state.grid.featuregrid.grid.columns : [],
     features: state.grid && state.grid.data || [],
     map: (state.map && state.map) || (state.config && state.config.map),
