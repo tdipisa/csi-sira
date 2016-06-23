@@ -44,7 +44,7 @@
             <AuthorizedObject
                 list={model.getValue("/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale/sira:impianto/sira:Sede/sira:codiceSira/text()")}
                 listTitle={"Impianto Autorizzato"}
-                detailsTemplateConfigURL={"assets/impiantoAutorizzato.config"}/>
+                detailsTemplateConfigURL={"assets/impiantoAutorizzato.jsxt"}/>
         </Section>
         <Section header='RIEPILOGO RECUPERO RIFIUTI' eventKey='2' expanded={true}>
             <SiraTable

@@ -70,10 +70,10 @@ function configureQueryFormError(e) {
     };
 }
 
-function getAttributeValues(ft, field, params) {
+function getAttributeValues(ft, field, params, serviceUrl) {
     return (dispatch) => {
-        if (field.valueService && field.valueService.url) {
-            let {url} = ConfigUtils.setUrlPlaceholders({url: field.valueService.url});
+        if (serviceUrl) {
+            let {url} = ConfigUtils.setUrlPlaceholders({url: serviceUrl});
 
             for (let param in params) {
                 if (params.hasOwnProperty(param)) {
@@ -119,19 +119,22 @@ function loadFeatureTypeConfig(url, params) {
                 }
             }
 
+            let serviceUrl = config.query.service.url;
+
             // Configure QueryForm attributes
             for (let field in config.query.fields) {
                 if (field) {
                     let f = config.query.fields[field];
 
-                    let urlParams = f.valueService && f.valueService.urlParams ? assign({}, params, f.valueService.urlParams) : params;
+                    let urlParams = config.query.service && config.query.service.urlParams ? assign({}, params, config.query.service.urlParams) : params;
+                    urlParams = f.valueService && f.valueService.urlParams ? assign({}, urlParams, f.valueService.urlParams) : urlParams;
 
                     dispatch(getAttributeValues({
                         id: config.featureTypeName,
                         name: config.featureTypeNameLabel,
                         geometryName: config.geometryName,
                         geometryType: config.geometryType
-                    }, f, urlParams));
+                    }, f, urlParams, f.valueService && f.valueService.urlParams ? serviceUrl : null));
                 }
             }
 

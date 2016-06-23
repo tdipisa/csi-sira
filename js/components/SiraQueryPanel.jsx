@@ -200,7 +200,7 @@ const SiraQueryPanel = React.createClass({
                 <Panel className="querypanel-container" collapsible expanded={this.props.filterPanelExpanded} header={this.renderHeader()} bsStyle="primary">
                     {this.renderDatasetHeader()}
                     <QueryBuilder
-                        authParam={this.props.params}
+                        params={this.props.params}
                         featureTypeConfigUrl={this.props.featureTypeConfigUrl}
                         useMapProjection={this.props.useMapProjection}
                         removeButtonIcon={this.props.removeButtonIcon}

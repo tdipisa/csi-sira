@@ -34,7 +34,9 @@ function siradec(state = initialState, action) {
 
             // Sorting the attributes by the given index in configuration
             attributes.sort((attA, attB) => {
-                return attA.index - attB.index;
+                if (attA.index && attB.index) {
+                    return attA.index - attB.index;
+                }
             });
 
             let newState = assign({}, state, {

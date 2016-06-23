@@ -4,9 +4,9 @@
    "geometryName": "geometria",
    "geometryType": "Point",
    "featureinfo":{
-     "templateURL": "assets/infoTemplate.config",
+     "templateURL": "assets/infoTemplate.jsxt",
      "card": {
-       "template": "assets/cardTemplate.config",
+       "template": "assets/cardTemplate.jsxt",
        "service": {
          "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
          "params": {
@@ -19,7 +19,7 @@
    },
    "featuregrid": {
      "card": {
-       "template": "assets/cardTemplate.config",
+       "template": "assets/cardTemplate.jsxt",
        "service": {
          "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
          "params": {
@@ -73,18 +73,22 @@
      }
    },
    "query": {
+     "service": {
+       "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
+       "urlParams": {
+         "version": "1.1.0",
+         "outputFormat": "application/json"
+       }
+     },
      "fields":[
         {
            "index": 1,
-           "id": "sira:impianto/sira:Sede/sira:provincia",
-           "fieldName":"Provincia",
+           "attribute": "sira:impianto/sira:Sede/sira:provincia",
+           "label":"Provincia",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
-               "typeName": "sira:province",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "typeName": "sira:province"
              }
            },
            "valueId":"sigla",
@@ -92,15 +96,14 @@
         },
         {
            "index": 2,
-           "id": "sira:impianto/sira:Sede/sira:comune",
-           "fieldName":"Comune",
+           "attribute": "sira:impianto/sira:Sede/sira:comune",
+           "label":"Comune",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
                "typeName": "sira:comuni",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "propertyName": "id_comune,sigla_provincia,toponimo",
+               "sortBy": "toponimo+A"
              }
            },
            "valueId":"toponimo",
@@ -113,15 +116,13 @@
         },
         {
            "index": 3,
-           "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRecupero/sira:TipoRecupero/@gml:id",
-           "fieldName":"Tipo Recupero",
+           "attribute": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRecupero/sira:TipoRecupero/@gml:id",
+           "label":"Tipo Recupero",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
                "typeName": "sira:tipo_recupero",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "sortBy": "id_tipo_recupero+A"
              }
            },
            "fidPrefix": "tipo_recupero",
@@ -130,15 +131,13 @@
         },
         {
            "index": 4,
-           "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/@gml:id",
-           "fieldName":"Tipo Rifiuto",
+           "attribute": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/@gml:id",
+           "label":"Tipo Rifiuto",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
                "typeName": "sira:tipo_rifiuto",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "sortBy": "id+A"
              }
            },
            "fidPrefix": "tipo_rifiuto",
@@ -147,15 +146,13 @@
         },
         {
            "index": 5,
-           "id": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:operazioneRecupero/sira:OperazioneRecupero/@gml:id",
-           "fieldName":"Operazione Recupero",
+           "attribute": "sira:rifiuto/sira:Rifiuto/sira:dettaglio/sira:SchedaRifiuto/sira:operazioneRecupero/sira:OperazioneRecupero/@gml:id",
+           "label":"Operazione Recupero",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
                "typeName": "sira:operaz_recupero",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "sortBy": "id+A"
              }
            },
            "fidPrefix": "operaz_rec",
@@ -164,15 +161,13 @@
         },
         {
            "index": 6,
-           "id": "sira:attivita/sira:Attivita/@gml:id",
-           "fieldName":"Attività",
+           "attribute": "sira:attivita/sira:Attivita/@gml:id",
+           "label":"Attività",
            "type":"list",
            "valueService": {
-             "url":"{geoserverUrl}/ows?service=WFS&request=GetFeature",
              "urlParams": {
                "typeName": "sira:sipra_d_attivita",
-               "version": "1.1.0",
-               "outputFormat": "application/json"
+               "sortBy": "id_attivita+A"
              }
            },
            "fidPrefix": "attivita",
@@ -181,8 +176,8 @@
         },
         {
            "index": 7,
-           "id": "sira:istanza/sira:IstanzaAutorizzativa/sira:dataRilascio",
-           "fieldName":"Data Provvedimento",
+           "attribute": "sira:istanza/sira:IstanzaAutorizzativa/sira:dataRilascio",
+           "label":"Data Provvedimento",
            "type":"date"
         }
      ]
