@@ -268,6 +268,12 @@ function loadTopologyInfoWithFilter(layerId, modelConfig, topologyConfig, filter
         }).then((response) => {
             let infoTopologyResponse = response.data;
 
+            if (modelConfig.columns) {
+                modelConfig.columns = modelConfig.columns.map((column) => {
+                    return !column.field ? assign({}, column, {field: uuid.v1()}) : column;
+                });
+            }
+
             let features = TemplateUtils.getModels(infoTopologyResponse,
                 modelConfig.root, modelConfig.columns, "1.1.0");
 

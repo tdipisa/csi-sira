@@ -29,8 +29,8 @@ const GMLViewer = React.createClass({
         return nextProps.response !== this.props.response;
     },
     onCellClicked(node) {
-        if (node.colIndex === 0) {
-            this.goToDetail(node.data);
+        if (node.colIndex === 0 && node.colDef.id) {
+            this.goToDetail(node.data, node.colDef.field);
         }
     },
     render() {
@@ -53,7 +53,7 @@ const GMLViewer = React.createClass({
                 onCellClicked={this.onCellClicked}/>
         );
     },
-    goToDetail(data) {
+    goToDetail(data, idFieldName) {
         /*let reqURL = this.props.contentConfig.detailsConfig.wfsUrl + "&FEATUREID=" + data.id;
         for (let param in this.props.params) {
             if (this.props.params.hasOwnProperty(param)) {
@@ -70,7 +70,7 @@ const GMLViewer = React.createClass({
             }
         }
 
-        let reqURL = url + "&FEATUREID=" + data.id;
+        let reqURL = url + "&FEATUREID=" + data[idFieldName];
 
         this.props.actions.onDetail(
             this.props.contentConfig.detailsConfig.template,

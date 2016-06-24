@@ -14,6 +14,9 @@ const {selectRows} = require('../../actions/card');
 
 const TemplateUtils = require('../../utils/TemplateUtils');
 
+const assign = require('object-assign');
+const uuid = require('node-uuid');
+
 require("ag-grid/dist/styles/ag-grid.css");
 require("ag-grid/dist/styles/theme-blue.css");
 
@@ -69,9 +72,11 @@ const SiraTable = React.createClass({
 
         let columns = this.props.columns.map((column) => {
             if (!column.profiles || (column.profiles && this.props.profile && column.profiles.indexOf(this.props.profile) !== -1)) {
-                return column;
+                let fieldName = !column.field ? uuid.v1() : column.field;
+                this.idFieldName = column.id === true ? fieldName : this.idFieldName;
+                return assign({}, column, {field: fieldName});
             }
-        }).filter((c) => c);
+        }, this).filter((c) => c);
 
         if (typeof this.props.features === 'function') {
             features = this.props.features();
@@ -90,7 +95,7 @@ const SiraTable = React.createClass({
 
         if (this.props.dependsOn) {
             features = features.filter(function(feature) {
-                return feature.id === this.props.card[this.props.dependsOn.tableId];
+                return feature[this.idFieldName] === this.props.card[this.props.dependsOn.tableId];
             }, this);
         }
 
@@ -113,7 +118,7 @@ const SiraTable = React.createClass({
     selectRows(params) {
         // this.props.selectRows(this.props.id, (params.selectedRows[0]) ? params.selectedRows[0].id : null);
         if (params.selectedRows[0]) {
-            this.props.selectRows(this.props.id, params.selectedRows[0].id);
+            this.props.selectRows(this.props.id, params.selectedRows[0].id || params.selectedRows[0][this.idFieldName]);
         }
     }
 });

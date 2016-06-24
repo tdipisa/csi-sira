@@ -54,32 +54,28 @@
                 columns={
                     [
                         {
-                            field: "id",
                             hide: true,
+                            id: true,
                             xpath: "sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/@gml:id"
                         },
                         {
                             headerName: 'Numero scheda',
                             width: 90,
-                            field: 'numscheda',
                             xpath:"sira:SchedaRifiuto/sira:nrScheda/text()"
                         },
                         {
                             headerName: 'Tipo recupero',
                             width: 300,
-                            field: 'tiporecupero',
                             xpath: "sira:SchedaRifiuto/sira:tipoRecupero/sira:TipoRecupero/sira:descrizione/text()"
                         },
                         {
                             headerName: 'Tipologia di rifiuto',
                             width: 100,
-                            field: 'codice',
                             xpath: "sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/sira:codice/text()"
                         },
                         {
                             headerName: 'Descrizione',
                             width: 500,
-                            field: 'descrizione',
                             xpath: "sira:SchedaRifiuto/sira:tipoRifiuto/sira:TipoRifiuto/sira:descrizione/text()"
                         }
                     ]
@@ -97,26 +93,23 @@
                     rowSelection={false}
                     columns={[
                         {
-                            field: "id",
                             hide: true,
+                            id: true,
                             xpath: "../sira:tipoRifiuto/sira:TipoRifiuto/@gml:id"
                         },
                         {
                             headerName: "Codice",
                             width: 100,
-                            field: "codice",
                             xpath: "sira:CodiceCER/sira:codice/text()"
                         },
                         {
                             headerName: "Tipo Pericoloso",
                             width: 100,
-                            field: "tipo",
                             xpath: "sira:CodiceCER/sira:pericoloso/text()"
                         },
                         {
                             headerName: "Descrizione",
                             width: 500,
-                            field: "descrizione",
                             xpath: "sira:CodiceCER/sira:descrizione/text()"
                         }
                     ]}
@@ -134,20 +127,18 @@
                     }}
                     columns={[
                         {
-                            field: "id",
                             hide: true,
+                            id: true,
                             xpath: "../sira:tipoRifiuto/sira:TipoRifiuto/@gml:id"
                         },
                         {
                             headerName: "Codice",
                             width: 100,
-                            field: "codice",
                             xpath: "sira:OperazioneRecupero/sira:codice/text()"
                         },
                         {
                             headerName: "Descrizione",
                             width: 500,
-                            field: "descrizione",
                             xpath: "sira:OperazioneRecupero/sira:descrizione/text()"
                         }
                     ]}
@@ -170,7 +161,8 @@
                 url="http://www.geoportale.piemonte.it/geonetworkrp/srv/ita/metadata.show"
                 params={{
                     id: 2658 || model.getValue("/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale/sira:impianto/sira:Sede/sira:codiceSira/text()"),
-                    currTab: 'rndt'}}
+                    currTab: 'rndt'
+                }}
             />
         </Section>
     </Panel>

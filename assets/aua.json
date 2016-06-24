@@ -22,39 +22,34 @@
        "root": "/wfs:FeatureCollection/wfs:member/sira:AutorizzazioneUnicaAmbientale",
        "columns": [
          {
-           "field": "id",
            "hide": true,
+           "id": true,
            "xpath": ["@gml:id"],
            "type": 2
          },
          {
-           "field": "codice",
            "headerName": "Codice SIRA",
            "xpath": ["sira:impianto/sira:Sede/sira:codiceSira/text()"],
            "type": 1
          },
          {
-           "field": "codicefisc",
            "headerName": "Codice fiscale (P.IVA)",
            "xpath": ["sira:istanza/sira:IstanzaAutorizzativa/sira:codiceFiscale/text()"],
            "profiles": ["B"],
            "type": 2
          },
          {
-           "field": "comune",
            "headerName": "Comune",
            "xpath": ["sira:impianto/sira:Sede/sira:comune/text()"],
            "type": 2
          },
          {
-           "field": "autamb",
            "headerName": "Autorizzazioni ambientali",
            "xpath": ["sira:attivita/sira:Attivita/sira:descrizione/text()"],
            "type": 2
          },
          {
            "hide": true,
-           "field": "geometry",
            "xpath": ["sira:impianto/sira:Sede/sira:geometria/gml:Point/gml:pos/text()"],
            "type": 6
          }
