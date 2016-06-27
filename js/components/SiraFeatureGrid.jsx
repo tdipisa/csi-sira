@@ -18,8 +18,10 @@ const {bindActionCreators} = require('redux');
 const {changeMapView} = require('../../MapStore2/web/client/actions/map');
 const {selectFeatures} = require('../actions/featuregrid');
 
-const FeatureGrid = connect(() => {
-    return {};
+const FeatureGrid = connect((state) => {
+    return {
+        select: state.featuregrid && state.featuregrid.select || []
+    };
 }, dispatch => {
     return bindActionCreators({
         selectFeatures: selectFeatures
@@ -68,7 +70,8 @@ const SiraFeatureGrid = React.createClass({
         toggleSiraControl: React.PropTypes.func,
         changeMapView: React.PropTypes.func,
         // loadFeatureGridConfig: React.PropTypes.func,
-        onExpandFilterPanel: React.PropTypes.func
+        onExpandFilterPanel: React.PropTypes.func,
+        selectFeatures: React.PropTypes.func
     },
     contextTypes: {
         messages: React.PropTypes.object
@@ -92,7 +95,8 @@ const SiraFeatureGrid = React.createClass({
             toggleSiraControl: () => {},
             changeMapView: () => {},
             // loadFeatureGridConfig: () => {},
-            onExpandFilterPanel: () => {}
+            onExpandFilterPanel: () => {},
+            selectFeatures: () => {}
         };
     },
     /*componentDidMount() {
@@ -108,6 +112,7 @@ const SiraFeatureGrid = React.createClass({
         }
     },*/
     onGridClose() {
+        this.props.selectFeatures([]);
         this.props.toggleSiraControl();
         this.props.onExpandFilterPanel(true);
     },
@@ -226,7 +231,14 @@ const SiraFeatureGrid = React.createClass({
                                     columnDefs={columns}
                                     features={this.props.features}
                                     style={{height: "300px", width: "100%"}}
-                                    maxZoom={16}/>
+                                    maxZoom={16}
+                                    zoom={15}
+                                    toolbar={{
+                                        zoom: true,
+                                        exporter: true,
+                                        toolPanel: false,
+                                        selectAll: true
+                                    }}/>
                             </div>
                         ) : (
                             <div style={{height: "300px", width: "100%"}}>
@@ -282,5 +294,6 @@ module.exports = connect((state) => ({
     toggleSiraControl: toggleSiraControl.bind(null, 'grid'),
     changeMapView: changeMapView,
     // loadFeatureGridConfig: loadFeatureGridConfig,
-    onExpandFilterPanel: expandFilterPanel
+    onExpandFilterPanel: expandFilterPanel,
+    selectFeatures: selectFeatures
 })(SiraFeatureGrid);

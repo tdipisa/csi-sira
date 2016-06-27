@@ -29,7 +29,7 @@ const assign = require('object-assign');
 const allReducers = combineReducers({
     userprofile: require('../reducers/userprofile'),
     mapInfo: require('../reducers/mapInfo'),
-    search: require('../../MapStore2/web/client/reducers/search').searchResults,
+    search: require('../../MapStore2/web/client/reducers/search'),
     browser: require('../../MapStore2/web/client/reducers/browser'),
     locale: require('../../MapStore2/web/client/reducers/locale'),
     draw: require('../../MapStore2/web/client/reducers/draw'),

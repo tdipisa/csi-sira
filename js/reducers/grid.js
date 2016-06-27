@@ -67,8 +67,11 @@ function grid(state = initialState, action) {
                     "properties": {}
                 };
 
+                let geometry;
                 for (let prop in feature) {
-                    if (feature.hasOwnProperty(prop) && prop !== "geometry") {
+                    if (feature[prop] && feature[prop].type === "geometry") {
+                        geometry = feature[prop];
+                    } else if (feature.hasOwnProperty(prop)) {
                         f.properties[prop] = feature[prop];
                     }
                 }
@@ -80,15 +83,15 @@ function grid(state = initialState, action) {
                 // Setting coordinates
                 if (state.featuregrid.grid.geometryType === "Polygon") {
                     let coordinates = [[]];
-                    for (let i = 0; feature.geometry && i < feature.geometry.coordinates.length; i++) {
+                    for (let i = 0; geometry && i < geometry.coordinates.length; i++) {
                         let coords = state.featuregrid.grid.wfsVersion === "1.1.0" ?
-                            [feature.geometry.coordinates[i][1], feature.geometry.coordinates[i][0]] : feature.geometry.coordinates[i];
+                            [geometry.coordinates[i][1], geometry.coordinates[i][0]] : geometry.coordinates[i];
                         coordinates[0].push(coords);
                     }
 
                     f.geometry.coordinates = coordinates;
                 } else if (state.featuregrid.grid.geometryType === "Point") {
-                    f.geometry.coordinates = feature.geometry ? [feature.geometry.coordinates[0][0], feature.geometry.coordinates[0][1]] : null;
+                    f.geometry.coordinates = geometry ? [geometry.coordinates[0][0], geometry.coordinates[0][1]] : null;
                 }
 
                 return f;
